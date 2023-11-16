@@ -164,4 +164,157 @@ public class VentanaFarmaciaController implements Initializable {
         guardarNodoEnArchivoInicio(nuevo);
     }
 
+    private void guardarNodoEnArchivoInicio(nodo nodo) {
+        String archivoRuta = "src/farmacia/Farmacos.txt";
+
+        try {
+            // Leer el contenido actual del archivo
+            Scanner scanner = new Scanner(new File(archivoRuta));
+            StringBuilder fileContent = new StringBuilder();
+
+            while (scanner.hasNextLine()) {
+                fileContent.append(scanner.nextLine()).append("\n");
+            }
+            scanner.close();
+
+            // Agregar los datos del nuevo nodo al inicio del contenido del archivo
+            String nuevoDato = nodo.getTipo() + "," + nodo.getNombre() + "," + nodo.getId() + "," + nodo.getPrecio() + "," + nodo.getUnidades() + "\n";
+            fileContent.insert(0, nuevoDato);
+
+            // Escribir el contenido actualizado en el archivo
+            FileWriter fileWriter = new FileWriter(archivoRuta);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(fileContent.toString());
+            bufferedWriter.close();
+
+            // Mostrar un mensaje de éxito
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Datos guardados dentro del archivo");
+            alerta.setContentText("Los datos se guardaron correctamente.");
+            alerta.showAndWait();
+        } catch (IOException e) {
+            // Mostrar un mensaje de error en caso de excepción
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setContentText("No se pudieron guardar los datos");
+            alerta.showAndWait();
+        }
+    }
+
+    private void actualizaArchivo(nodo producto, int cantidadComprada) {
+        String rutaArchivo = "src/tiendanike/Archivo.txt";
+
+        try {
+            File archivo = new File(rutaArchivo);
+            Scanner scanner = new Scanner(archivo);
+            StringBuilder contenidoArchivo = new StringBuilder();
+
+            while (scanner.hasNextLine()) {
+                contenidoArchivo.append(scanner.nextLine()).append("\n");
+            }
+            scanner.close();
+
+            String idProducto = producto.getId();
+
+            String[] lineas = contenidoArchivo.toString().split("\\n");
+            for (int i = 0; i < lineas.length; i++) {
+                String[] elementos = lineas[i].split(",");
+                if (elementos.length >= 5 && elementos[2].equals(idProducto)) {
+                    int unidades = Integer.parseInt(elementos[3]);
+                    unidades -= cantidadComprada;
+                    elementos[3] = Integer.toString(unidades);
+                    lineas[i] = String.join(",", elementos);
+                    break;
+                }
+            }
+
+            FileWriter fileWriter = new FileWriter(rutaArchivo);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            for (String linea : lineas) {
+                bufferedWriter.write(linea);
+                bufferedWriter.newLine();
+            }
+
+            bufferedWriter.close();
+        } catch (IOException e) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setHeaderText("Error al actualizar el archivo");
+            alerta.setContentText("Se produjo un error al actualizar el archivo.");
+            alerta.showAndWait();
+        }
+    }
+
+    @FXML
+    private void VerVentanaProductos(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        abrirventana("Productos.fxml", stage);
+    }
+
+    private void abrirventana(String fxmlFileName, Stage stage) throws IOException {
+        // Crear un nuevo cargador de FXML
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFileName));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void pop(ActionEvent event) {
+        if (!nodos.isEmpty()) {
+            nodos.remove(nodos.size() - 1);
+            String archivoRuta = "src/farmacia/Farmacos.txt";
+            File archivo = new File(archivoRuta);
+            try {
+                ObservableList<String> lineas = FXCollections.observableArrayList();
+                Scanner scanner = new Scanner(archivo);
+                while (scanner.hasNextLine()) {
+                    lineas.add(scanner.nextLine());
+                }
+                scanner.close();
+                FileWriter fileWriter = new FileWriter(archivoRuta);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                for (int i = 0; i < lineas.size() - 1; i++) {
+                    bufferedWriter.write(lineas.get(i));
+                    bufferedWriter.newLine();
+                }
+                bufferedWriter.close();
+                Alert ale = new Alert(Alert.AlertType.INFORMATION);
+                ale.setHeaderText("Información");
+                ale.setContentText("Elemento eliminado al final de la lista y del archivo!");
+                ale.showAndWait();
+                tabla.refresh();
+            } catch (IOException e) {
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setHeaderText("Error al eliminar");
+                alerta.setContentText("Se produjo un error al eliminar el elemento del archivo.");
+                alerta.showAndWait();
+            }
+        }
+    }
+
+    @FXML
+    private void histori(ActionEvent event) {
+        if (historial.isEmpty()) {
+            // Mostrar mensaje de advertencia si no hay compras en el historial
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setHeaderText("Historial de Compras");
+            alerta.setContentText("No hay compras registradas en el historial.");
+            alerta.showAndWait();
+        } else {
+            // Crear una cadena que contenga el historial de compras
+            StringBuilder historia = new StringBuilder();
+            for (String compra : historial) {
+                historia.append(compra).append("\n");
+            }
+
+            // Mostrar el historial de compras en una alerta
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setHeaderText("Historial de Compras");
+            alerta.setContentText(historia.toString());
+            alerta.showAndWait();
+        }
+    }
+
 }
