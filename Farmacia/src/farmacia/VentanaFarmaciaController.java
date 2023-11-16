@@ -317,4 +317,129 @@ public class VentanaFarmaciaController implements Initializable {
         }
     }
 
+    @FXML
+    private void agregarunidades(ActionEvent event) {
+        TextInputDialog dialogo = new TextInputDialog("");
+        dialogo.setTitle("Modificar Unidades de Producto");
+        dialogo.setHeaderText(null);
+        dialogo.setContentText("Ingrese la ID del producto a modificar unidades:");
+        Optional<String> idProducto = dialogo.showAndWait();
+
+        if (idProducto.isPresent()) {
+            String idBuscada = idProducto.get();
+            nodo productoEncontrado = null;
+            nodo primerNodo = nodos.get(0);
+            nodo nodoActual = primerNodo;
+            do {
+                if (nodoActual.getId().equals(idBuscada)) {
+                    productoEncontrado = nodoActual;
+                    break;
+                }
+                nodoActual = nodoActual.getSig();
+            } while (nodoActual != primerNodo);
+            if (productoEncontrado != null) {
+                TextInputDialog dialogoUnidades = new TextInputDialog("");
+                dialogoUnidades.setTitle("Modificar Unidades");
+                dialogoUnidades.setHeaderText(null);
+                dialogoUnidades.setContentText("Ingrese la nueva cantidad de unidades:");
+
+                Optional<String> nuevasUnidades = dialogoUnidades.showAndWait();
+                if (nuevasUnidades.isPresent()) {
+                    try {
+                        int cantidadNueva = Integer.parseInt(nuevasUnidades.get());
+
+                        if (cantidadNueva < 0) {
+                            Alert alerta = new Alert(Alert.AlertType.WARNING);
+                            alerta.setHeaderText("Cantidad inválida");
+                            alerta.setContentText("La cantidad de unidades no puede ser negativa.");
+                            alerta.showAndWait();
+                        } else {
+                            int unidadesAnteriores = productoEncontrado.getUnidades();
+                            productoEncontrado.setUnidades(cantidadNueva);
+                            ActualizarDatosArchivo(productoEncontrado, unidadesAnteriores - cantidadNueva);
+                            tabla.refresh();
+                            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                            alerta.setHeaderText("Unidades modificadas");
+                            alerta.setContentText("Las unidades del producto con ID "
+                                    + idBuscada + " se han modificado correctamente.");
+                            alerta.showAndWait();
+                        }
+                    } catch (NumberFormatException e) {
+                        // Mostrar mensaje si la entrada no es un número válido
+                        Alert alerta = new Alert(Alert.AlertType.ERROR);
+                        alerta.setHeaderText("Error");
+                        alerta.setContentText("Ingrese un número válido para las unidades.");
+                        alerta.showAndWait();
+                    }
+                }
+            } else {
+                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                alerta.setHeaderText("Producto no encontrado");
+                alerta.setContentText("No se encontró un producto con la ID ingresada.");
+                alerta.showAndWait();
+            }
+        }
+    }
+
+    private void ActualizarDatosArchivo(nodo producto, int cantidadComprada) {
+        String archivoRuta = "src/farmacia/Farmacos.txt";
+        File archivo = new File(archivoRuta);
+        try {
+            ObservableList<String> lineas = FXCollections.observableArrayList();
+            Scanner scanner = new Scanner(archivo);
+            while (scanner.hasNextLine()) {
+                lineas.add(scanner.nextLine());
+            }
+            scanner.close();
+            for (int i = 0; i < lineas.size(); i++) {
+                String[] elementos = lineas.get(i).split(",");
+                if (elementos.length >= 5 && elementos[2].equals(producto.getId())) {
+                    int unidades = Integer.parseInt(elementos[4]);
+                    unidades -= cantidadComprada;
+                    elementos[4] = Integer.toString(unidades);
+                    lineas.set(i, String.join(",", elementos));
+                    break;
+                }
+            }
+            FileWriter fileWriter = new FileWriter(archivoRuta);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            for (String linea : lineas) {
+                bufferedWriter.write(linea);
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void pmasvendido(ActionEvent event) {
+        String productoMasVendido = "";
+        int maxVentas = 0;
+
+        for (Map.Entry<String, Integer> entry : ventasPorProducto.entrySet()) {
+            String productoID = entry.getKey();
+            int ventas = entry.getValue();
+
+            if (ventas > maxVentas) {
+                maxVentas = ventas;
+                productoMasVendido = productoID;
+            }
+        }
+
+        if (!productoMasVendido.isEmpty()) {
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setHeaderText("Producto más vendido:");
+            alerta.setContentText("El producto más vendido: " + productoMasVendido);
+            alerta.showAndWait();
+        } else {
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setHeaderText("No hay datos de ventas");
+            alerta.setContentText("Aún no se ha registrado ninguna venta.");
+            alerta.showAndWait();
+        }
+    }
+
+    
 }
