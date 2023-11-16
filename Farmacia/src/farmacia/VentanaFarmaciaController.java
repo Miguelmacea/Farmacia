@@ -121,4 +121,47 @@ public class VentanaFarmaciaController implements Initializable {
         }
         tabla.setItems(nodos);
     }
+
+    @FXML
+    private void agregar(ActionEvent event) {
+        //Este es el metodo push!!!
+        // Al inicio verificar si todos los campos de texto están llenos
+        if (ti.getText().trim().isEmpty() || nomb.getText().trim().isEmpty() || ide.getText().trim().isEmpty() || unidad.getText().trim().isEmpty()
+                || preci.getText().trim().isEmpty()) {
+            // Mostrar mensaje de advertencia sobre campos vacíos
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setHeaderText("Mensaje de información");
+            alerta.setTitle("Diálogo de advertencia");
+            alerta.setContentText("Es necesario llenar todos los campos");
+            alerta.showAndWait();
+            return;
+        }
+
+        // Luego crea un nuevo nodo con los datos ingresados
+        nodo nuevo = new nodo(ti.getText().trim(), nomb.getText().trim(), ide.getText().trim(),
+                Double.parseDouble(preci.getText().trim()), Integer.parseInt(unidad.getText().trim()));
+
+        // Agregar el nuevo nodo al inicio de la lista
+        if (!nodos.isEmpty()) {
+            nodo ultimo = nodos.get(nodos.size() - 1);
+            nuevo.setSig(nodos.get(0)); // El nuevo nodo apunta al primer nodo actual
+            ultimo.setSig(nuevo); // El último nodo actual apunta al nuevo nodo
+        } else {
+            // Si la lista está vacía, hacer que el nuevo nodo apunte a sí mismo
+            nuevo.setSig(nuevo); // El único nodo apunta a sí mismo
+        }
+        nodos.add(0, nuevo);
+
+        // Actualizar la tabla y limpiar los campos de texto
+        tabla.setItems(nodos);
+        tabla.refresh();
+        ti.clear();
+        nomb.clear();
+        ide.clear();
+        unidad.clear();
+        preci.clear();
+
+        guardarNodoEnArchivoInicio(nuevo);
+    }
+
 }
