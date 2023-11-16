@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="648.0" prefWidth="1012.0" style="-fx-background-color: fcf7ff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmacia.ProductosController">
+   <children>
+      <Pane prefHeight="652.0" prefWidth="1012.0" style="-fx-background-color: fcf7ff;">
+         <children>
+            <Label layoutX="443.0" layoutY="14.0" text="Productos">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+            <Pane layoutX="26.0" layoutY="60.0" prefHeight="563.0" prefWidth="963.0" style="-fx-background-color: e2eafc;">
+               <children>
+                  <ImageView fitHeight="180.0" fitWidth="242.0" layoutX="30.0" layoutY="32.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../Imagenes/t-h-content-100.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="180.0" fitWidth="242.0" layoutX="353.0" layoutY="32.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../Imagenes/VENDA-DE-GASA.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="180.0" fitWidth="242.0" layoutX="678.0" layoutY="32.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../Imagenes/Colgate-productos-030919.jpg" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="79.0" layoutY="228.0" text="Higiene Personal">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <Label layoutX="750.0" layoutY="228.0" text="Salud Horal">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <Label layoutX="450.0" layoutY="228.0" text="Curas">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <ImageView fitHeight="229.0" fitWidth="242.0" layoutX="30.0" layoutY="270.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../Imagenes/gaviscon-forte-12-sobres.jpg" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="42.0" layoutY="505.0" prefHeight="25.0" prefWidth="219.0" text="Medicamentos Antiacidos">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="229.0" fitWidth="242.0" layoutX="353.0" layoutY="270.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../Imagenes/aboca-adiprox-advance-50-capsulas.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="229.0" fitWidth="242.0" layoutX="678.0" layoutY="270.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../Imagenes/jeringa52132BD.jpg" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="387.0" layoutY="505.0" text="Productos Dieteticos">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="711.0" layoutY="505.0" text="Productos Sanitarios">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Button fx:id="vprincipal" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#principal" prefHeight="38.0" prefWidth="129.0" style="-fx-background-color: c5d1eb;" text="Ventana Principal" />
+         </children>
+      </Pane>
+   </children>
+</VBox>

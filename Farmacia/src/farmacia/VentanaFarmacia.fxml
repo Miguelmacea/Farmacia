@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="669.0" prefWidth="1015.0" style="-fx-background-color: fcf7ff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="farmacia.VentanaFarmaciaController">
+    <children>
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      <TableView fx:id="tabla" layoutX="120.0" layoutY="230.0" prefHeight="415.0" prefWidth="760.0">
+        <columns>
+          <TableColumn fx:id="tip" prefWidth="115.0" text="Tipo" />
+          <TableColumn fx:id="nom" prefWidth="146.0" text="Nombre" />
+            <TableColumn fx:id="aid" prefWidth="157.0" text="ID" />
+            <TableColumn fx:id="pre" prefWidth="176.0" text="Precio" />
+            <TableColumn fx:id="uni" prefWidth="165.0" text="Unidades" />
+        </columns>
+      </TableView>
+      <TextField fx:id="ti" layoutX="126.0" layoutY="74.0" />
+      <TextField fx:id="nomb" layoutX="126.0" layoutY="129.0" />
+      <TextField fx:id="ide" layoutX="419.0" layoutY="74.0" />
+      <TextField fx:id="preci" layoutX="419.0" layoutY="129.0" />
+      <TextField fx:id="unidad" layoutX="718.0" layoutY="74.0" />
+      <Button fx:id="agr" layoutX="126.0" layoutY="176.0" mnemonicParsing="false" onAction="#agregar" prefHeight="28.0" prefWidth="162.0" style="-fx-background-color: c5d1eb;" text="Añadir" />
+      <Label layoutX="194.0" layoutY="50.0" text="Tipo" />
+      <Label layoutX="182.0" layoutY="111.0" text="Nombre" />
+      <Label layoutX="493.0" layoutY="50.0" text="ID" />
+      <Label layoutX="481.0" layoutY="111.0" text="Precio" />
+      <Label layoutX="770.0" layoutY="50.0" text="Unidades" />
+      <MenuBar layoutY="-1.0" prefHeight="29.0" prefWidth="1015.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem fx:id="m1" mnemonicParsing="false" onAction="#histori" text="Historial De Ventas" />
+                  <MenuItem fx:id="t2" mnemonicParsing="false" onAction="#pmasvendido" text="Producto Mas Vendido" />
+                  <MenuItem fx:id="t2" mnemonicParsing="false" onAction="#agregarunidades" text="Agregar Unidades" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Button fx:id="comp" layoutX="718.0" layoutY="176.0" mnemonicParsing="false" onAction="#Comprar" prefHeight="28.0" prefWidth="162.0" style="-fx-background-color: c5d1eb;" text="Comprar" />
+      <Button fx:id="vpro" layoutX="718.0" layoutY="124.0" mnemonicParsing="false" onAction="#VerVentanaProductos" prefHeight="28.0" prefWidth="162.0" style="-fx-background-color: c5d1eb;" text="Productos" />
+      <Button fx:id="elimi" layoutX="419.0" layoutY="176.0" mnemonicParsing="false" onAction="#pop" prefHeight="28.0" prefWidth="162.0" style="-fx-background-color: c5d1eb;" text="Eliminar" />
+    </children>
+</AnchorPane>
