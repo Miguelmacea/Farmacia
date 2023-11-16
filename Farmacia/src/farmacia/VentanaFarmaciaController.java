@@ -441,5 +441,11 @@ public class VentanaFarmaciaController implements Initializable {
         }
     }
 
-    
+    private void registrarCompraEnHistorial(nodo producto, int cantidad, double total) {
+        String detalleCompra = "Compra: " + producto.getTipo() + ", Cantidad: " + cantidad + ", Total: $" + total;
+
+        // Agregar el detalle de la compra al historial
+        historial.add(detalleCompra);
+    }
+
 }
