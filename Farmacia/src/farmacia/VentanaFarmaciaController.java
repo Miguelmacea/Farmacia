@@ -448,4 +448,75 @@ public class VentanaFarmaciaController implements Initializable {
         historial.add(detalleCompra);
     }
 
+    @FXML
+    private void Comprar(ActionEvent event) {
+        nodo productoSeleccionado = tabla.getSelectionModel().getSelectedItem();
+
+        if (productoSeleccionado == null) {
+            // Mostrar mensaje de advertencia si no se ha seleccionado ningún producto
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setHeaderText("Producto no seleccionado");
+            alerta.setContentText("Seleccione un producto de la tabla para comprar.");
+            alerta.showAndWait();
+            return;
+        }
+
+        TextInputDialog dialogo = new TextInputDialog("");
+        dialogo.setTitle("Cantidad a comprar");
+        dialogo.setHeaderText(null);
+        dialogo.setContentText("Ingrese la cantidad a comprar (disponibles: " + productoSeleccionado.getUnidades() + "):");
+        Optional<String> cantidad = dialogo.showAndWait();
+
+        if (!cantidad.isPresent()) {
+            return;
+        } else if (!cantidad.get().matches("^[1-9]\\d*$")) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setHeaderText("Entrada inválida");
+            alerta.setContentText("La cantidad de unidades debe ser un número entero positivo.");
+            alerta.showAndWait();
+            return;
+        }
+
+        int cantidadComprar = Integer.parseInt(cantidad.get());
+
+        if (cantidadComprar > productoSeleccionado.getUnidades()) {
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setHeaderText("Cantidad no disponible");
+            alerta.setContentText("La cantidad de unidades seleccionada no está disponible.");
+            alerta.showAndWait();
+            return;
+        }
+
+        // Realizar la compra: Actualizar la cantidad de unidades en el producto seleccionado
+        productoSeleccionado.setUnidades(productoSeleccionado.getUnidades() - cantidadComprar);
+
+        // Actualizar el archivo con la nueva cantidad de unidades
+        ActualizarDatosArchivo(productoSeleccionado, cantidadComprar);
+
+        double totalPagar = productoSeleccionado.getPrecio() * cantidadComprar;
+        Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacion.setHeaderText("Confirmar compra");
+        confirmacion.setContentText("Precio unitario: $" + productoSeleccionado.getPrecio() + "\nCantidad a comprar: " + cantidadComprar + "\nTotal a pagar: $" + totalPagar);
+        Optional<ButtonType> result = confirmacion.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // Registrar la compra en el historial (aquí puedes implementar tu lógica para el historial)
+            registrarCompraEnHistorial(productoSeleccionado, cantidadComprar, totalPagar);
+        }
+
+        if (productoSeleccionado.getUnidades() <= 0) {
+            nodos.remove(productoSeleccionado);
+
+            tabla.setItems(null);
+            tabla.layout();
+            tabla.setItems(FXCollections.observableList(nodos));
+
+            Alert informacion = new Alert(Alert.AlertType.INFORMATION);
+            informacion.setHeaderText("Unidades agotadas");
+            informacion.setContentText("No quedan unidades disponibles para este producto.");
+            informacion.showAndWait();
+        }
+
+        tabla.refresh();
+    }
 }
