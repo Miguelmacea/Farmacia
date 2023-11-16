@@ -83,6 +83,8 @@ public class VentanaFarmaciaController implements Initializable {
     private MenuItem t2;
 
     private Map<String, Integer> ventasPorProducto;
+    @FXML
+    private MenuItem sal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -413,34 +415,6 @@ public class VentanaFarmaciaController implements Initializable {
         }
     }
 
-    @FXML
-    private void pmasvendido(ActionEvent event) {
-        String productoMasVendido = "";
-        int maxVentas = 0;
-
-        for (Map.Entry<String, Integer> entry : ventasPorProducto.entrySet()) {
-            String productoID = entry.getKey();
-            int ventas = entry.getValue();
-
-            if (ventas > maxVentas) {
-                maxVentas = ventas;
-                productoMasVendido = productoID;
-            }
-        }
-
-        if (!productoMasVendido.isEmpty()) {
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-            alerta.setHeaderText("Producto más vendido:");
-            alerta.setContentText("El producto más vendido: " + productoMasVendido);
-            alerta.showAndWait();
-        } else {
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-            alerta.setHeaderText("No hay datos de ventas");
-            alerta.setContentText("Aún no se ha registrado ninguna venta.");
-            alerta.showAndWait();
-        }
-    }
-
     private void registrarCompraEnHistorial(nodo producto, int cantidad, double total) {
         String detalleCompra = "Compra: " + producto.getTipo() + ", Cantidad: " + cantidad + ", Total: $" + total;
 
@@ -519,4 +493,55 @@ public class VentanaFarmaciaController implements Initializable {
 
         tabla.refresh();
     }
+
+    @FXML
+    private void pmasvendido(ActionEvent event) {
+        if (nodos.isEmpty()) {
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setHeaderText("Lista vacía");
+            alerta.setContentText("No hay productos en la lista.");
+            alerta.showAndWait();
+            return;
+        }
+
+        nodo productoMayorPrecio = nodos.get(0);
+        nodo productoMenorPrecio = nodos.get(0);
+
+        nodo nodoActual = nodos.get(0).getSig();
+
+        do {
+            if (nodoActual.getPrecio() > productoMayorPrecio.getPrecio()) {
+                productoMayorPrecio = nodoActual;
+            }
+
+            if (nodoActual.getPrecio() < productoMenorPrecio.getPrecio()) {
+                productoMenorPrecio = nodoActual;
+            }
+
+            nodoActual = nodoActual.getSig();
+        } while (nodoActual != nodos.get(0));
+
+        // Mostrar los productos con mayor y menor precio en una alerta
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setHeaderText("Productos con Mayor y Menor Precio");
+        alerta.setContentText("Farmaco con mayor precio:\n\n"
+                + "Tipo: " + productoMayorPrecio.getTipo() + "\n"
+                + "Nombre: " + productoMayorPrecio.getNombre()+ "\n"
+                + "ID: " + productoMayorPrecio.getId() + "\n"
+                + "Unidades: " + productoMayorPrecio.getUnidades() + "\n"
+                + "Precio: $" + productoMayorPrecio.getPrecio() + "\n\n"
+                + "Farmaco con menor precio:\n\n"
+                + "Tipo: " + productoMenorPrecio.getTipo() + "\n"
+                + "Nombre: " + productoMenorPrecio.getNombre()+ "\n"
+                + "ID: " + productoMenorPrecio.getId() + "\n"
+                + "Unidades: " + productoMenorPrecio.getUnidades() + "\n"
+                + "Precio: $" + productoMenorPrecio.getPrecio());
+        alerta.showAndWait();
+    }
+
+    @FXML
+    private void Exit(ActionEvent event) {
+        System.exit(0);
+    }
+
 }

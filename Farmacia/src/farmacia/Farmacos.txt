@@ -1,0 +1,30 @@
+Pastilla,Acetaminofen,10993900,7500.0,30
+Higiene personal,Jabón de Aloe Vera,23456789.0,1500,50
+Curas,Vendaje Adhesivo Flexible,98765432,3000.0,40
+Salud oral,Enjuague Bucal Refrescante,87654321,5000.0,22
+Medicamentos Antiacidos,Antiácido de Frutas,54321678,4000.0,35
+Productos Dietéticos,Barra Energética de Manzana,34567890,3500.0,20
+Productos Sanitarios,Termómetro Digital,45678901,6000.0,15
+Higiene personal,Champú Reparador,98761234,4000.0,40
+Curas,Gasas Esterilizadas,87612345,2500.0,60
+Salud oral,Cepillo Dental Suave,76543210,1800.0,70
+Medicamentos Antiacidos,Tabletas Efervescentes de Limón,65432109,4500.0,50
+Productos Dietéticos,Batido Proteico de Vainilla,54321098,6000.0,30
+Productos Sanitarios,Mascarilla Quirúrgica,43210987,750.0,100
+Higiene personal,Desodorante sin Aluminio,32109876,3500.0,45
+Curas,Apósitos Adhesivos Transparentes,21098765,2200.0,55
+Salud oral,Hilo Dental con Mentol,10987654,1600.0,65
+Medicamentos Antiacidos,Suspensión Oral de Magnesio,09876543,3400.0,25
+Productos Dietéticos,Suplemento de Omega-3,98765432,3800.0,35
+Productos Sanitarios,Guantes de Nitrilo,87654321,1000.0,75
+Higiene personal,Crema Hidratante de Almendras,76543210,4800.0,30
+Curas,Esparadrapo Hipoalergénico,65432109,2400.0,50
+Salud oral,Enjuague Bucal Blanqueador,54321098,4000.0,20
+Medicamentos Antiacidos,Pastillas Efervescentes de Menta,43210987,3000.0,40
+Productos Dietéticos,Barra Energética de Chocolate,32109876,2800.0,45
+Productos Sanitarios,Alcohol en Gel Desinfectante,21098765,2000.0,55
+Higiene personal,Loción Corporal de Coco,10987654,3400.0,25
+Curas,Apósito Hemostático,09876543,3600.0,35
+Salud oral,Cepillo Dental Medio,98765432,1200.0,70
+Medicamentos Antiacidos,Tabletas de Alivio Rápido,87654321,2600.0,20
+Productos Dietéticos,Bebida Energética de Guayaba,76543210,2200.0,60

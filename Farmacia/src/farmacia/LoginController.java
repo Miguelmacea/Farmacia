@@ -47,7 +47,8 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
+    private static final String ARCHIVO_DATOS = "datos.txt";
     private Map<String, String> datosUsuarios;
 
     public LoginController() {
@@ -56,7 +57,7 @@ public class LoginController implements Initializable {
 
     private Map<String, String> cargarDatos() {
         Map<String, String> datos = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("src/farmacia/registo.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/farmacia/register.txt"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
@@ -97,8 +98,20 @@ public class LoginController implements Initializable {
         newStage.show();
     }
 
+    private void openWindow(String fxmlFileName, Stage stage) throws IOException {
+        // Crear un nuevo cargador de FXML
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFileName));
+        // Cargar el archivo FXML y asignarlo como la raíz de la ventana
+        Parent root = loader.load();
+        // Crear una nueva escena con la raíz cargada
+        Scene scene = new Scene(root);
+        // Establecer la nueva escena como la escena de la ventana
+        stage.setScene(scene);
+        stage.show();
+    }
+
     @FXML
-    private void logear(ActionEvent event) throws IOException{
+    private void logear(ActionEvent event) throws IOException {
         String usuario = t1.getText();
         String contrasena = t2.getText();
 
@@ -121,25 +134,13 @@ public class LoginController implements Initializable {
 
     @FXML
     private void salida(ActionEvent event) {
-        
+        System.exit(0);
     }
 
     @FXML
-    private void registrase(ActionEvent event) throws IOException{
+    private void registrase(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         openWindow("Registro.fxml", stage);
     }
-    private void openWindow(String fxmlFileName, Stage stage) throws IOException {
-        // Crear un nuevo cargador de FXML
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFileName));
-        // Cargar el archivo FXML y asignarlo como la raíz de la ventana
-        Parent root = loader.load();
-        // Crear una nueva escena con la raíz cargada
-        Scene scene = new Scene(root);
-        // Establecer la nueva escena como la escena de la ventana
-        stage.setScene(scene);
-        stage.show();
-    }
 
-    
 }

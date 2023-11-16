@@ -40,7 +40,7 @@ public class RegistroController implements Initializable {
     @FXML
     private Button can;
 
-    private static final String FILE_NAME = "src/farmacia/registro.txt";
+    private static final String FILE_NAME = "src/farmacia/register.txt";
     /**
      * Initializes the controller class.
      */

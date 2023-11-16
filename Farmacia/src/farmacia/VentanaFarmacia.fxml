@@ -38,8 +38,9 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem fx:id="m1" mnemonicParsing="false" onAction="#histori" text="Historial De Ventas" />
-                  <MenuItem fx:id="t2" mnemonicParsing="false" onAction="#pmasvendido" text="Producto Mas Vendido" />
+                  <MenuItem fx:id="t2" mnemonicParsing="false" onAction="#pmasvendido" text="Productos De Mayor Y Menor Precio" />
                   <MenuItem fx:id="t2" mnemonicParsing="false" onAction="#agregarunidades" text="Agregar Unidades" />
+                  <MenuItem fx:id="sal" mnemonicParsing="false" onAction="#Exit" text="Salir" />
             </items>
           </Menu>
         </menus>
